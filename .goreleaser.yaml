@@ -1,0 +1,45 @@
+version: 2
+
+builds:
+- id: 
+  binary: webhook
+  main: .
+  env:
+  - GO_PKG=github.com/kobajagi/webhook-example
+  flags:
+  - -trimpath
+  ldflags:
+  - -s -w -extldflags "-static" -X main.Version={{.Version}}
+  goos:
+  - linux
+  goarch:
+  - amd64
+
+dockers:
+- goos: linux
+  goarch: amd64
+  image_templates:
+  - "predragjns/webhook-example:latest"
+  - "predragjns/webhook-example:{{ .Major }}"
+  - "predragjns/webhook-example:{{ .Major }}.{{ .Minor }}"
+  - "predragjns/webhook-example:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+  dockerfile: Dockerfile.goreleaser
+  build_flag_templates:
+  - --pull
+  - --build-arg="VERSION={{.Version}}"
+  - --build-arg="VCS_REF={{.ShortCommit}}"
+  - --build-arg="BUILD_DATE={{.Date}}"
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  version_template: "{{ .Tag }}-snapshot"
+
+release:
+  github:
+    owner: kobajagi
+    name: webhook-example
+  extra_files:
+  - glob: ./webhook-example-*.tgz # helm chart
+    name_template: webhook-example-{{ .Major }}.{{ .Minor }}.{{ .Patch }}-chart.tgz
