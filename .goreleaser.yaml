@@ -19,10 +19,10 @@ dockers:
 - goos: linux
   goarch: amd64
   image_templates:
-  - "predragjns/webhook-example:latest"
-  - "predragjns/webhook-example:{{ .Major }}"
-  - "predragjns/webhook-example:{{ .Major }}.{{ .Minor }}"
-  - "predragjns/webhook-example:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+  - "docker.io/predragjns/webhook-example:latest"
+  - "docker.io/predragjns/webhook-example:{{ .Major }}"
+  - "docker.io/predragjns/webhook-example:{{ .Major }}.{{ .Minor }}"
+  - "docker.io/predragjns/webhook-example:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
   dockerfile: Dockerfile.goreleaser
   build_flag_templates:
   - --pull
