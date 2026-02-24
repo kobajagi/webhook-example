@@ -50,7 +50,7 @@ jobs:
         run: helm package deploy/example-webhook
 
       - name: Login to DockerHub with helm
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | helm registry login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Push chart
         run: helm push webhook-example-${VERSION}.tgz oci://registry-1.docker.io/predragjns
